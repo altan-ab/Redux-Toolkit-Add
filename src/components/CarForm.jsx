@@ -50,7 +50,7 @@ function CarForm() {
         </div>
         <div className="field">
           <button className="button is-link">Gönder</button>
-          <h3 style={{ color: 'tomato' }}>{warning}</h3>
+          <h3>{warning}</h3>
         </div>
       </form>
     </div>

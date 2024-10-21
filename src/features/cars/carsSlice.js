@@ -20,19 +20,30 @@ export const counterSlice = createSlice({
       state.names = actions.payload
     },
     prices: (state, actions) => {
-      state.price = actions.payload
+      // state.price = actions.payload
+      if (actions.payload > 0) {
+        state.price = actions.payload
+        state.warning = ''
+      } else {
+        state.price = 0
+        state.warning = 'Please enter a positive price amount'
+      }
     },
     catalog: (state) => {
       if (!state.cars.find((car) => car.name === state.names)) {
-        console.log('car name')
-        state.warning = ''
-        const newCar = {
-          name: state.names,
-          price: state.price,
-          id: crypto.randomUUID(),
+        if (state.names.trim() && state.price > 0) {
+          state.warning = ''
+          const newCar = {
+            name: state.names,
+            price: state.price,
+            id: crypto.randomUUID(),
+          }
+          state.cars = [...state.cars, newCar]
+          state.names = ''
+          state.price = 0
+        } else {
+          state.warning = 'Please enter a valid name and price'
         }
-        state.cars = [...state.cars, newCar]
-        console.log(state.cars)
       } else {
         state.warning = "You can't buy two of the same car"
       }
